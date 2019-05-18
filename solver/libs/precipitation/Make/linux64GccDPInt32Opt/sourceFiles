@@ -1,0 +1,18 @@
+SOURCE = \
+species/speciesMixture/speciesMixture.C \
+species/speciesThermo/speciesThermoModel.C \
+species/speciesThermo/MAPST/MAPST.C \
+species/speciesThermo/idealST/idealST.C \
+species/speciesThermo/nonIdealST/nonIdealST.C \
+populationBalanceSubModels/nucleationModels/classicalNucleation/classicalNucleation.C \
+populationBalanceSubModels/nucleationModels/powerLawNucleation/powerLawNucleation.C \
+populationBalanceSubModels/growthModels/OnculGrowth/OnculGrowth.C \
+populationBalanceSubModels/growthModels/HanhounGrowth/HanhounGrowth.C \
+populationBalanceSubModels/growthModels/GalbraithGrowth/GalbraithGrowth.C \
+populationBalanceSubModels/aggregationModels/GalbraithAggregation/GalbraithAggregation.C \
+precipitationModel/precipitationModel.C \
+precipitationModel/None/None.C \
+precipitationModel/Galbraith/Galbraith.C \
+precipitationModel/Hanhoun/Hanhoun.C \
+precipitationModel/Ye/Ye.C \
+precipitationModel/Oncul/Oncul.C 

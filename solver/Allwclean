@@ -1,0 +1,10 @@
+#!/bin/sh
+cd ${0%/*} || exit 1    # Run from this directory
+set -x
+
+wclean libso ./libs/precipitation
+wclean libso ./libs/driftFlux/mixtureViscosityModels
+wclean libso ./libs/driftFlux/relativeVelocityModels
+wclean
+
+#------------------------------------------------------------------------------

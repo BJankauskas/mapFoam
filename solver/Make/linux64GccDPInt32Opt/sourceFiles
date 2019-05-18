@@ -1,0 +1,4 @@
+SOURCE = \
+./libs/driftFlux/incompressibleTwoPhaseInteractingMixture/incompressibleTwoPhaseInteractingMixture.C \
+./libs/driftFlux/compressibleTurbulenceModels.C \
+mapFoam.C 

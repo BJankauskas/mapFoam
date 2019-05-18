@@ -1,0 +1,5 @@
+*.swp
+lnInclude/
+libs/precipitation/lnInclude
+libs/driftFlux/mixtureViscosityModels/lnInclude
+libs/driftFlux/relativeVelocityModels/lnInclude

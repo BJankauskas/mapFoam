@@ -1,0 +1,44 @@
+EXE_INC =  -DFULLDEBUG -g -O0 \
+    -I./libs/driftFlux/incompressibleTwoPhaseInteractingMixture \
+    -I./libs/driftFlux/mixtureViscosityModels/lnInclude \
+    -I./libs/driftFlux/relativeVelocityModels/lnInclude \
+    -I./libs/precipitation/lnInclude \
+    -I$(LIB_SRC)/finiteVolume/lnInclude \
+    -I$(LIB_SRC)/meshTools/lnInclude \
+    -I$(LIB_SRC)/sampling/lnInclude \
+    -I$(LIB_SRC)/transportModels \
+    -I$(LIB_SRC)/transportModels/compressible/lnInclude \
+    -I$(LIB_SRC)/transportModels/twoPhaseMixture/lnInclude \
+    -I$(LIB_SRC)/TurbulenceModels/turbulenceModels/lnInclude \
+    -I$(LIB_SRC)/TurbulenceModels/compressible/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/reactionThermo/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/basic/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/specie/lnInclude \
+    -I../OpenQBMM_2.0.0/src/quadratureMethods/univariateMomentSet/lnInclude \
+    -I../OpenQBMM_2.0.0/src/quadratureMethods/extendedMomentInversion/lnInclude \
+    -I../OpenQBMM_2.0.0/src/quadratureMethods/quadratureNode \
+    -I../OpenQBMM_2.0.0/src/quadratureMethods/moments \
+    -I../OpenQBMM_2.0.0/src/quadratureMethods/quadratureApproximation/lnInclude \
+    -I../OpenQBMM_2.0.0/src/quadratureMethods/populationBalanceModels/lnInclude
+    
+
+
+EXE_LIBS = \
+    -L$(FOAM_USER_LIBBIN) \
+    -lmapDriftFluxTransportModels \
+    -lmapDriftFluxRelativeVelocityModels \
+    -lprecipitationModel \
+    -lfiniteVolume \
+    -lmeshTools \
+    -lsampling \
+    -lfvOptions \
+    -lcompressibleTransportModels \
+    -lturbulenceModels \
+    -lcompressibleTurbulenceModels \
+    -lfluidThermophysicalModels \
+    -lreactionThermophysicalModels \
+    -lspecie \
+    -lthermophysicalFunctions \
+    -lextendedMomentInversion \
+    -lquadratureApproximation \
+    -lpopulationBalance

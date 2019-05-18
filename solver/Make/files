@@ -1,0 +1,5 @@
+./libs/driftFlux/incompressibleTwoPhaseInteractingMixture/incompressibleTwoPhaseInteractingMixture.C
+./libs/driftFlux/compressibleTurbulenceModels.C
+mapFoam.C
+
+EXE = $(FOAM_USER_APPBIN)/mapFoam
