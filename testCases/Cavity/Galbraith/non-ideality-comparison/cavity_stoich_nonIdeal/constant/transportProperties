@@ -1,0 +1,62 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  3.0.1                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      transportProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+transportModel  Newtonian;
+
+nu              [0 2 -1 0 0 0 0] 1e-05;
+
+
+phases (struvite water);
+
+struvite
+{
+    transportModel  BinghamPlastic;
+
+    "(plastic|BinghamPlastic)Coeffs"
+    {
+        coeff       0.00023143;
+        exponent    179.26;
+
+        BinghamCoeff    0.0005966;
+        BinghamExponent 1050.8;
+        BinghamOffset   0;
+
+        muMax       10;
+    }
+
+    rho         1510;
+}
+
+water
+{
+    transportModel  Newtonian;
+
+    nu              1.7871e-06;
+    rho             996;
+}
+
+relativeVelocityModel simple;
+
+"(simple|general)Coeffs"
+{
+    V0              (0 0 0);
+    a               285.84;
+    a1              0.1;
+    residualAlpha   0;
+}
+
+
+// ************************************************************************* //

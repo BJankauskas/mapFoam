@@ -1,0 +1,15 @@
+#!/usr/bin/gnuplot
+set terminal pdfcairo enhanced color dashed font "TeX Gyre Pagella, 16" 
+set encoding utf8
+
+#set title "Concentration evolution"
+set key inside 
+set output "semi-analytical-comparison.pdf"
+
+set xlabel "Time (min)" font "TeX Gyre Pagella, 16"
+set ylabel "Concentration (M)" font "TeX Gyre Pagella, 16"
+set yrange [0:0.04]
+#set tics font "Helvetica 14"
+
+plot "C_MG" u ($1/60):2 t "OpenFOAM" w p pt 1 ps 0.35, \
+     "Semi-Analytical" u ($1/60):2 t "Semi-Analytical" w l

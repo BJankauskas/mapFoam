@@ -1,0 +1,99 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  3.0.1                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      reactions;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+reactionType  irreversible;
+
+reactants
+(
+    PO4
+    NH4
+    MG
+);
+products
+(
+    MAP
+);
+
+PO4
+{
+    lhs{
+        stoichCoeff            1;
+        exponent               1;
+    };
+    rhs
+    {
+        stoichCoeff            0;
+        exponent               0;
+    };   
+};
+
+NH4
+{
+    lhs{
+        stoichCoeff            1;
+        exponent               1;
+    };
+    rhs{
+        stoichCoeff            0;
+        exponent               0;
+    }; 
+};
+
+MG
+{
+    lhs{
+        stoichCoeff            1;
+        exponent               1;
+    };
+    rhs{
+        stoichCoeff            0;
+        exponent               0;
+    }; 
+};
+
+MAP
+{
+    lhs{
+        stoichCoeff            0;
+        exponent               0;
+    };
+    rhs{
+        stoichCoeff            1;
+        exponent               1;
+    }; 
+};
+
+H2O
+{
+    lhs{
+        stoichCoeff            0;
+        exponent               0;
+    };
+    rhs{
+        stoichCoeff            0;
+        exponent               0;
+    }; 
+};
+
+reactionRate Arrhenius;
+
+A 1e9; //Prefactor
+Ta 10000; //ActivationEn
+beta    0;
+T       298.15;
+Treact  280.00;       
+// ************************************************************************* //

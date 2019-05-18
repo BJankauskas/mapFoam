@@ -1,0 +1,57 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  3.0.1                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      thermo.liquid;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+species
+(
+    PO4
+    NH4
+    MG
+    MAP
+    H2O
+);
+
+PO4
+{
+    molWeight        94.9714;
+    ionicCharge      -3;
+};
+
+NH4
+{
+    molWeight        18.03846;
+    ionicCharge      1;
+};
+
+MG
+{
+    molWeight        24.3050;
+    ionicCharge      2;
+};
+
+MAP
+{
+    molWeight        245.43;
+    ionicCharge      0;
+};
+
+H2O
+{
+    molWeight        18.01528;
+    ionicCharge      0;
+};
+
+// ************************************************************************* //

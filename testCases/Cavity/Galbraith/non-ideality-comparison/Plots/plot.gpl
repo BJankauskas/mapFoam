@@ -1,0 +1,71 @@
+#!/usr/bin/gnuplot
+set terminal pdfcairo enhanced color dashed font "TeX Gyre Pagella, 13" 
+set encoding utf8
+
+#set title "Concentrations"
+set key inside 
+set output "non-ideality-comparison.pdf"
+
+set xlabel "Time (s)" font "TeX Gyre Pagella, 16"
+set log x
+set format x '10^{%L}'
+set xrange [1e-2:5]
+set ylabel "Concentration (M)" font "TeX Gyre Pagella, 16"
+
+plot "C_ideal"  u 1:2 t "Case 1a" w l lc "purple", \
+     "C_nonIdeal" u 1:2 t "Case 1b" w l lc "green", \
+     "Ct_MAPST_noGamma" u 1:2 t "Case 2a" w l lc "blue", \
+     "Ct_MAPST_Gamma" u 1:2 t "Case 2b" w l lc "orange"
+
+reset
+
+Ksp = (5.495e-14)**0.33
+Cinit = 0.04
+
+set terminal pdfcairo enhanced color dashed font "TeX Gyre Pagella, 13" 
+set encoding utf8
+
+set key inside 
+set key bottom right
+set log x
+set format x '10^{%L}'
+set xrange [1e-2:5e0]
+
+set style fill solid 1.0 border 0 
+
+#Horizontal percentage markers
+set arrow from 1e-2,50 to 5e0, 50 lt 0 nohead
+set arrow from 1e-2,90 to 5e0, 90 lt 0 nohead
+set arrow from 1e-2,99 to 5e0, 99 lt 0 nohead
+
+#Vertical markers
+#Ideal
+set object 1 circle at 0.02295, 50 size scr 5e-3 fc rgb "purple" front
+set object 2 circle at 0.03307, 90 size scr 5e-3 fc rgb "purple" front
+set object 3 circle at 0.05125, 99 size scr 5e-3 fc rgb "purple" front
+
+#nonIdeal
+set object 4 circle at 0.0639,50 size scr 5e-3 fc rgb  "green" front
+set object 5 circle at 0.0837,90 size scr 5e-3 fc rgb  "green" front
+set object 6 circle at 0.1103,99 size scr 5e-3 fc rgb "green" front
+
+#MAPST noGamma
+set object 7 circle at 0.655, 50 size scr 5e-3 fc rgb   "blue" front
+set object 8 circle at 1.343, 90 size scr 5e-3 fc rgb  "blue" front
+
+#MAPST Gamma
+set object 9  circle at 0.953,50 size scr 5e-3 fc rgb    "orange" front
+set object 10 circle at 1.947,90 size scr 5e-3 fc rgb  "orange" front
+
+set xlabel "Time (s)" font "TeX Gyre Pagella, 16"
+set ylabel "Chemical conversion \%" font "TeX Gyre Pagella, 16"
+
+set output "chemical-conversion.pdf"
+
+
+plot "CConv_ideal" u 1:(100* $2) t "Case 1a" w l lc "purple",\
+     "CConv_nonIdeal" u 1:(100*$2) t "Case 1b" w l lc "green",\
+     "CConv_MAPST_noGamma" u 1:(100*$2) t "Case 2a" w l lc "blue",\
+     "CConv_MAPST_Gamma" u 1:(100*$2) t "Case 2b" w l lc rgb "orange"
+
+

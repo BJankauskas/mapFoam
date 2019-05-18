@@ -1,0 +1,17 @@
+#!/usr/bin/gnuplot
+set terminal pdfcairo enhanced color dashed font "TeX Gyre Pagella, 12" 
+set encoding utf8
+
+Cj = 1.417*10**9;
+Cg = 2.0817*10**(-6);
+
+set title "Concentrations"
+set key inside 
+set output "Evolution.pdf"
+
+set xlabel "Time (s)"
+#set xrange [0:500]
+set ylabel "Concentration (M)"
+#set yrange [4600:5300]
+
+plot "Ct_MG"  u 1:2 t "OpenFOAM" w p pt 1 ps 0.35

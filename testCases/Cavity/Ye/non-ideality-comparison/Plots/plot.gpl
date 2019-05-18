@@ -1,0 +1,76 @@
+#!/usr/bin/gnuplot
+set terminal pdfcairo enhanced color dashed font "TeX Gyre Pagella, 13" 
+#set terminal pdfcairo enhanced color dashed font "Helvetica, 12" 
+
+
+
+set encoding utf8
+
+#set title "Concentration evolution"
+set key inside 
+#set key bottom left
+set output "non-ideality-comparison.pdf"
+set log x
+set format x '10^{%L}'
+set xrange [1:2500]
+
+set xlabel "Time (min)" font "TeX Gyre Pagella, 16"
+set ylabel "Concentration (M)" font "TeX Gyre Pagella, 16"
+
+plot "C_MG_ideal"           u ($1/60):2 t "Case 1a" w l lc "purple",\
+     "C_MG_nonIdeal"        u ($1/60):2 t "Case 1b" w l lc "green",\
+     "Ct_MG_MAPST_noGamma"  u ($1/60):2 t "Case 2a" w l lc "blue",\
+     "Ct_MG_MAPST_Gamma"    u ($1/60):2 t "Case 2b" w l lc "orange"
+
+
+reset
+
+Ksp = (5.495e-14)**0.33
+Cinit = 0.04
+
+set terminal pdfcairo enhanced color dashed font "TeX Gyre Pagella, 13" 
+set encoding utf8
+
+set key inside 
+set key bottom right
+set log x
+set format x '10^{%L}'
+set xrange [1e0:4e3]
+
+set style fill solid 1.0 border 0 
+
+#Horizontal percentage markers
+set arrow from 1e0,50 to 4e3, 50 lt 0 nohead
+set arrow from 1e0,90 to 4e3, 90 lt 0 nohead
+set arrow from 1e0,99 to 4e3, 99 lt 0 nohead
+
+#Vertical markers
+#Ideal
+set object 1 circle at (419.7/60), 50 size scr 5e-3 fc rgb "purple" front
+set object 2 circle at (805.3/60), 90 size scr 5e-3 fc rgb "purple" front
+set object 3 circle at (1956.8/60), 99 size scr 5e-3 fc rgb "purple" front
+#
+##nonIdeal
+set object 4 circle at (2005/60),50 size scr 5e-3 fc rgb  "green" front
+set object 5 circle at (2845/60),90 size scr 5e-3 fc rgb  "green" front
+set object 6 circle at (3890/60),99 size scr 5e-3 fc rgb "green" front
+
+#MAPST noGamma
+set object 7 circle at (23268/60), 50 size scr 5e-3 fc rgb   "blue" front
+set object 8 circle at (36796/60), 90 size scr 5e-3 fc rgb  "blue" front
+#
+##MAPST Gamma
+set object 9  circle at (31825/60),50 size scr 5e-3 fc rgb    "orange" front
+set object 10 circle at (48137/60),90 size scr 5e-3 fc rgb  "orange" front
+
+set xlabel "Time (min)" font "TeX Gyre Pagella, 16"
+set ylabel "Chemical conversion \%" font "TeX Gyre Pagella, 16"
+
+set output "chemical-conversion.pdf"
+
+
+plot "CConv_ideal" u ($1/60):(100* $2) t "Case 1a" w l lc "purple",\
+     "CConv_nonIdeal" u ($1/60):(100*$2) t "Case 1b" w l lc "green",\
+     "CConv_MAPST_noGamma" u ($1/60):(100*$2) t "Case 2a" w l lc "blue",\
+     "CConv_MAPST_Gamma" u ($1/60):(100*$2) t "Case 2b" w l lc rgb "orange"
+

@@ -1,0 +1,101 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  1.0                                   |
+|   \\  /    A nd           | Web:      http://www.openfoam.org               |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+FoamFile
+{
+    version         2.0;
+    format          ascii;
+
+    root            "";
+    case            "";
+    instance        "";
+    local           "";
+
+    class           dictionary;
+    object          fvSchemes;
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+ddtSchemes
+{
+    default Euler;
+}
+
+gradSchemes
+{
+    default         Gauss linear;
+    grad(p)         Gauss linear;
+}
+
+divSchemes
+{
+    default          		            	none;
+    div(phi,rho)     		            	Gauss limitedLinear 1;
+    div(phi,U)      		            	Gauss limitedLinearV 1;
+    div(phiU,p)      		            	Gauss linear;
+    div(phi,k)       		            	Gauss limitedLinear 1;
+    div(phi,K)       		            	Gauss limitedLinear 1;
+    div(phi,epsilon) 		            	Gauss limitedLinear 1;
+    div(phi,Yi)    			                Gauss limitedLinear 1;
+
+    div((muEff*dev2(T(grad(U))))) 	        Gauss linear;
+    div(((rho*nuEff)*dev2(T(grad(U)))))     Gauss linear;
+
+    div(rhoPhi,U)       		            Gauss linearUpwind grad(U);
+    div(tauDm)          		            Gauss linear;
+    "div\(phi,alpha.*\)" 		            Gauss vanLeer;
+    "div\(phirb,alpha.*\)" 		            Gauss linear;
+    div(rhoPhi,k)       		            Gauss limitedLinear 1;
+    div(rhoPhi,epsilon) 		            Gauss limitedLinear 1;
+
+    div(((rho*nuEff)*dev2(T(grad(U)))))     Gauss linear;
+
+    div(phi,Tf)                             Gauss upwind;
+
+    div(phi,moment)                         Gauss upwind;                     
+
+
+}
+
+laplacianSchemes
+{
+    default                 		        Gauss linear corrected;
+    laplacian(muEff,U)      		        Gauss linear corrected;
+    laplacian(muEff,ft)     		        Gauss linear corrected;
+    laplacian(muEff,fu)     		        Gauss linear corrected;
+    laplacian(((alphah*mut)+alpha),h) 	    Gauss linear corrected;
+    laplacian((rho|A(U)),p) 		        Gauss linear corrected;
+    laplacian(rhoD,k)       		        Gauss linear corrected;
+    laplacian(rhoD,epsilon) 		        Gauss linear corrected;
+}
+
+interpolationSchemes
+{
+    default         			            linear;
+    interpolate(HbyA) 			            linear;
+
+    "interpolate\(moment.*\)"               upwind phi;
+
+    reconstruct(U)                          upwind;
+    reconstruct(weight)                     upwind;
+    reconstruct(abscissa)                   upwind;
+    reconstruct(sigma)                      upwind;
+}
+
+snGradSchemes
+{
+    default        			corrected;
+}
+
+fluxRequired
+{
+    p;
+}
+
+// ************************************************************************* //

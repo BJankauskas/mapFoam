@@ -1,0 +1,103 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  dev                                   |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      populationaBalanceProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+populationBalanceModel univariate;
+
+univariateCoeffs
+{
+    aggregation off;
+
+    aggregationKernel
+    {
+        aggregationKernel constant;
+    }
+
+    breakup off;
+
+    breakupKernel
+    {
+        breakupKernel constant;
+
+        Cb        Cb        [ 0 0 0 0 0 0 0 ] 6.0e-4;
+        epsilonExp          0.75;
+        nuExp              -1.25;
+        sizeExp             1.0;
+    }
+
+    daughterDistribution
+    {
+        daughterDistribution symmetricFragmentation;
+    }
+
+    diffusionModel
+    {
+        diffusionModel  none;
+        gammaLam        gammaLam    [ 0 2 -1 0 0 0 0 ] 0.0001;
+        Sc              0.7;
+    }
+
+    growth on;
+
+    growthModel
+    {
+        growthModel	    GalbraithGrowth;
+        //growthModel	    Oncul;
+        //growthModel	    HanhounGrowth;
+
+        minAbscissa     minAbscissa [0 1 0 0 0 0 0] 0.0;
+        maxAbscissa     maxAbscissa [0 1 0 0 0 0 0] 1e15;
+
+        Cg        Cg        [0 0 -1 0 0 0 0 ] 2.0817e-7; // Galbraith
+        //Cg        Cg        [0 0 -1 0 0 0 0 ] 4.67e-6; // Hanhoun
+
+        //exponent  1.34;
+        exponent    5.062;
+    }
+
+    nucleationModel
+    {
+        nucleationModel  powerLawNucleation;
+
+        powerLawNucleationCoeffs
+        {
+            nucleationRate nucleationRate [0 0 0 0 0 0 0] 1.417e9;
+            exponent    1.68; //Galbraith
+
+            //nucleationRate nucleationRate [0 0 0 0 0 0 0] 1; // This is FUDGING 
+            //exponent    1; //Galbraith
+        }
+
+        classicalNucleationCoeffs
+        {
+            SaiMin  0;    // Minimum Sa
+            SaiMax  2.68; // Transition between Homogeneous to Heterogeneous Nucleation
+
+            B1      B1      [0 0 0 0 0 0 0] 2.9e7;
+            B2      B2      [0 0 0 0 0 0 0] 3.98e9;
+            A1      0.6;
+            A2      4.49;
+
+        } 
+
+    }
+}
+
+
+
+
+
+// ************************************************************************* //

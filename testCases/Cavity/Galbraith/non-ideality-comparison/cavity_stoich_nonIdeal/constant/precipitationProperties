@@ -1,0 +1,125 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  3.0.1                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     3.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      precipitationProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+simulationType precipitate;
+
+//precipitationModelName Oncul;
+precipitationModelName Galbraith;
+//precipitationModelName Ye;
+//precipitationModelName Hanhoun;
+
+speciesThermoModel nonIdealST; 
+
+speciesMixture
+{
+
+    species
+    (
+        NH4
+        PO4
+        MG
+        MAP
+        H2O 
+    );
+
+    NH4
+    {
+        molWeight       molWeight [1 0 0 0 -1 0 0] 18.03846;
+        rExponent       1;
+        requiredC       0.04;
+        ionCharge       1;
+    }
+    PO4
+    {
+        //molWeight       molWeight [1 0 0 0 -1 0 0] 31;
+        molWeight       molWeight [1 0 0 0 -1 0 0] 94.9714;  
+        rExponent       1;
+        requiredC       0.04;
+        ionCharge       -3;
+    }
+    MG
+    {
+        molWeight       molWeight [1 0 0 0 -1 0 0] 24.3050;  
+        rExponent       1;
+        requiredC       0.04;
+        ionCharge       2;
+    }
+    MAP
+    {
+        molWeight       molWeight [1 0 0 0 -1 0 0] 245;
+        rExponent       0;
+    }
+    H2O
+    {
+        molWeight       molWeight [1 0 0 0 -1 0 0] 18.015;
+        rExponent       0;
+    }
+    
+    inertSpecie         H2O;
+    precipitant         MAP;
+
+
+    ka  0.523; // Pi/6
+    kv  0.01;
+
+    MAPSTCoeffs
+    {
+        nReactants      3;
+
+        gammaVariation  true;
+        gamma           1;
+        
+        ADH             0.509;
+
+        //pH              7.46;
+        pH              9.6;
+
+        equilibriumConstants
+        {
+            pKHPO4      -12.35;
+            pKH2PO4     -7.20;
+            pKH3PO4     -2.15;
+            pKMgPO4     -4.80;
+            pKMgHPO4    -2.91;
+            pKMgH2PO4   -0.45;
+            pKMgOH      -2.56;
+            pKNH4       -9.25;
+            pKH2O       -14;
+
+            Ksp         6.76e-14;
+            pKsp        -13.26;
+        }
+    }
+
+    "(idealSTCoeffs|nonIdealSTCoeffs)"
+    {
+        nReactants      3;
+        gamma           1;
+        gammaVariation  true;
+
+        pH              9.6;
+
+        equilibriumConstants
+        {
+            Ksp         5.4954e-14;
+            pKsp        -13.26;
+        }
+    }
+}
+
+
+// ************************************************************************* //

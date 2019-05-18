@@ -1,0 +1,67 @@
+#!/usr/bin/gnuplot
+set terminal pdfcairo enhanced color dashed font "TeX Gyre Pagella, 12" 
+set encoding utf8
+
+Cj = 1.417*10**9;
+Cg = 2.0817*10**(-6);
+
+set title "Concentrations"
+set key inside 
+set output "Evolution.pdf"
+
+set xlabel "Time (ms)"
+#set xrange [0:500]
+set ylabel "Concentration (M)"
+#set yrange [4600:5300]
+
+plot "C_MG"  u ($1*100):2 t "OpenFOAM" w p pt 1 ps 0.35, \
+     "Semi-Analytical" u ($1*100):2 t "Semi-Analytical" w l
+
+set output "SourceTerm.pdf"
+
+set title "Source Term"
+
+plot "specieSourceTerm"     u ($1*100):2  t "OF Source Term" w p pt 1 ps 0.35, \
+     "sourceTermAnalytical" u ($1*100):2 t "Analytical" w l
+                                        
+set output "NuclSourceTerm.pdf"
+
+set title "Nucleation source Term"
+
+plot "nucleationSource"     u ($1*100):2  t "OF J Term" w p pt 1 ps 0.35, \
+     "nuclSourceAnalytical" u ($1*100):2 t "J analytical" w l
+
+set output "SI.pdf"
+set title "Supersaturation Index"
+
+plot "SI"                u ($1*100):2 t "OF SI" w p pt 1 ps 0.35,\
+     "saturationIndices" u ($1*100):3 t "SI analytical" w l
+
+set output "SR.pdf"
+set title "Supersaturation Ratio"
+
+plot "SR" u ($1*1000):2 t "OF SR" w p pt 1 ps 0.35,\
+     "saturationIndices" u ($1*100):2 t "SR analytical" w l
+#plot "saturationIndices" u ($1*1000):3 t "SR Analytical" w p pt 1 ps 0.35,\
+
+set output "m0.pdf"
+set title "m0 evolution"
+
+plot "moment.0.populationBalance" u ($1*100):2 t "OF m0" w p pt 1 ps 0.35
+
+set output "dm0dt.pdf"
+set title "dm0/dt evolution"
+
+plot "SI" u ($1*100):(Cj*$2**1.68) t "OF dm0/dt" w p pt 1 ps 0.35
+
+set output "m1.pdf"
+set title "m1 evolution"
+
+plot "moment.1.populationBalance" u ($1*100):2 t "OF m1" w p pt 1 ps 0.35
+
+set output "m2.pdf"
+set title "m2 evolution"
+
+plot "moment.2.populationBalance" u ($1*100):2 t "OF m2" w p pt 1 ps 0.35
+
+                                             

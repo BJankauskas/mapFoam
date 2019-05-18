@@ -1,0 +1,99 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  3.0.1                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      solutionProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+species
+(
+    PO4
+    NH4
+    MG
+    MAP
+    H2O
+);
+
+PO4
+{
+    molWeight        94.9714;
+    lhs
+    {
+        stoichCoeff            1;
+        exponent               1;
+    };
+    rhs{
+        stoichCoeff            0;
+        exponent               0;
+    };   
+};
+
+NH4
+{
+    molWeight        18.03846;
+    lhs
+    {
+        stoichCoeff            1;
+        exponent               1;
+    };
+    rhs{
+        stoichCoeff            0;
+        exponent               0;
+    }; 
+};
+
+MG
+{
+    molWeight        24.3050;
+    lhs
+    {
+        stoichCoeff            1;
+        exponent               1;
+    };
+    rhs{
+        stoichCoeff            0;
+        exponent               0;
+    }; 
+};
+
+MAP
+{
+    molWeight         245.43;
+    lhs
+    {
+        stoichCoeff            0;
+        exponent               0;
+    };
+    rhs{
+        stoichCoeff            1;
+        exponent               1;
+    }; 
+};
+
+H2O
+{
+    molWeight        18.01528;
+    lhs
+    {
+        stoichCoeff            0;
+        exponent               0;
+    };
+    rhs{
+        stoichCoeff            0;
+        exponent               0;
+    }; 
+};
+
+huckel   debye;
+
+// ************************************************************************* //
