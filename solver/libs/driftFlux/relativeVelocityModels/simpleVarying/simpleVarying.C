@@ -2,7 +2,7 @@
   =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
-    \\  /    A nd           | Copyright (C) 2014-2016 OpenFOAM Foundation
+    \\  /    A nd           | Copyright (C) 2014-2015 OpenFOAM Foundation
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
 License
@@ -23,10 +23,8 @@ License
 
 \*---------------------------------------------------------------------------*/
 
-#include "tFudge.H"
+#include "simpleVarying.H"
 #include "addToRunTimeSelectionTable.H"
-
-#include "zeroGradientFvPatchFields.H"
 
 // * * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * //
 
@@ -34,15 +32,15 @@ namespace Foam
 {
 namespace relativeVelocityModels
 {
-    defineTypeNameAndDebug(tFudge, 0);
-    addToRunTimeSelectionTable(relativeVelocityModel, tFudge, dictionary);
+    defineTypeNameAndDebug(simpleVarying, 0);
+    addToRunTimeSelectionTable(relativeVelocityModel, simpleVarying, dictionary);
 }
 }
 
 
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
-Foam::relativeVelocityModels::tFudge::tFudge
+Foam::relativeVelocityModels::simpleVarying::simpleVarying
 (
     const dictionary& dict,
     const incompressibleTwoPhaseInteractingMixture& mixture
@@ -50,41 +48,42 @@ Foam::relativeVelocityModels::tFudge::tFudge
 :
     relativeVelocityModel(dict, mixture),
     a_("a", dimless, dict),
-    a1_("a1", dimless, dict),
     V0_("V0", dimVelocity, dict),
     residualAlpha_("residualAlpha", dimless, dict),
-    Vt_(this->mixture().U()),
-    g_("g", dimAcceleration, dict) //TODO FUDGE - should just used regular g field; sort it out 
+    Vt_(this->mixture().U()),      // TODO FUDGE
+    g_("g", dimAcceleration, dict) // TODO FUDGE
 {}
 
 
 // * * * * * * * * * * * * * * * * Destructor  * * * * * * * * * * * * * * * //
 
-Foam::relativeVelocityModels::tFudge::~tFudge()
+Foam::relativeVelocityModels::simpleVarying::~simpleVarying()
 {}
 
 
 // * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * * //
 
-void Foam::relativeVelocityModels::tFudge::correct()
+void Foam::relativeVelocityModels::simpleVarying::correct()
 {
 
-    const volScalarField& dd = this->mixture().d32();
-    //const volScalarField& dd = this->mixture().d43();
+    //const volScalarField& dd = this->mixture().d32();
+    const volScalarField& dd = this->mixture().d43();
     const volScalarField& mu = this->mixture().mu();
 
-    Udm_ =
+    Udm_ = 
         (rhoc_/rho())
-       *(g_*dd*dd*(rhod_-rhoc_)/(18*mu))
-       *(
-            exp(-a_*max(alphad_ - residualAlpha_, scalar(0)))
-          - exp(-a1_*max(alphad_ - residualAlpha_, scalar(0)))
-        );
+        *(g_*dd*dd*(rhod_ - rhoc_)/(18 * mu))
+        *pow(scalar(10), -a_*max(alphad_, scalar(0)));
 
-    Info<< "min(Udm) = " << min(Udm_).value() << " max(Udm) = " << max(Udm_).value() <<"\n"
-        << "max(Vt) = "<< max((g_*dd*dd*(rhod_ - rhoc_)/(18 * mu))).value() << "\n"
-        << "max(rhox/rho()) = "<< max(rhoc_/rho()).value() << "\n"
-        << "min(mu) = "<< min(mu).value() << " max(mu) = "<< max(mu).value() << endl;
+
+  //  Info<< "min(Udm) = " << min(Udm_).value() << " max(Udm) = " << max(Udm_).value() <<"\n"
+  //      << "mag(Vt) = "<< mag(min((g_*dd*dd*(rhod_ - rhoc_)/(18 * mu))).value()) << "\n"
+  //      << "max(rhod - rhoc) = "<<(rhod_ - rhoc_) << "\n"
+  //      << "max(dd) = "<< (dd.weightedAverage(mu.mesh().Vsc())).value() << "\n"
+  //      << "max(rhoc/rho()) = "<< max(rhoc_/rho()).value() << "\n"
+  //      << "max(rho) = "<< max(rho()).value() << " min(rho) = " << min(rho()).value() << "\n"
+  //      << "min(mu) = "<< min(mu).value() << " max(mu) = "<< max(mu).value() << endl;
+
 
 }
 

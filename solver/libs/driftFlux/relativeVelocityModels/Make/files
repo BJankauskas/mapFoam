@@ -1,7 +1,7 @@
 relativeVelocityModel/relativeVelocityModel.C
 simple/simple.C
-simpleFudge/simpleFudge.C
+simpleVarying/simpleVarying.C
 general/general.C
-tFudge/tFudge.C
+generalVarying/generalVarying.C
 
 LIB = $(FOAM_USER_LIBBIN)/libmapDriftFluxRelativeVelocityModels

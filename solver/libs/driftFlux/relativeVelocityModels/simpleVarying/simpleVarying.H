@@ -22,18 +22,18 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Class
-    Foam::tFudge
+    Foam::simpleVarying
 
 Description
-    General relative velocity model
+    Simple relative velocity model
 
 SourceFiles
-    tFudge.C
+    simpleVarying.C
 
 \*---------------------------------------------------------------------------*/
 
-#ifndef tFudge_H
-#define tFudge_H
+#ifndef simpleVarying_H
+#define simpleVarying_H
 
 #include "relativeVelocityModel.H"
 
@@ -45,10 +45,10 @@ namespace relativeVelocityModels
 {
 
 /*---------------------------------------------------------------------------*\
-                         Class tFudge Declaration
+                         Class simpleVarying Declaration
 \*---------------------------------------------------------------------------*/
 
-class tFudge
+class simpleVarying
 :
     public relativeVelocityModel
 {
@@ -57,31 +57,29 @@ class tFudge
         //- A coefficient
         dimensionedScalar a_;
 
-        //- a1 coefficient
-        dimensionedScalar a1_;
-
         //- Drift velocity
         dimensionedVector V0_;
 
         //- Residual phase fraction
         dimensionedScalar residualAlpha_;
 
-        //- Drift velocity field
-        volVectorField Vt_;
+        //- Terminal velocity field
+        volVectorField Vt_;  //TODO FUDGE
 
-        dimensionedVector g_; //TODO FUDGE
+        //- Gravity const vector
+        dimensionedVector g_; //TODO FUDGE 
 
 
 public:
 
     //- Runtime type information
-    TypeName("tFudge");
+    TypeName("simpleVarying");
 
 
     // Constructors
 
         //- Construct from components
-        tFudge
+        simpleVarying
         (
             const dictionary& dict,
             const incompressibleTwoPhaseInteractingMixture& mixture
@@ -89,7 +87,7 @@ public:
 
 
     //- Destructor
-    ~tFudge();
+    ~simpleVarying();
 
 
     // Member Functions
